@@ -15,8 +15,6 @@ class WhoKnowsTestCase(unittest.TestCase):
     def tearDown(self):
         """Clean up after each test. Delete the database file."""
         self.db.close()
-        self.db.unlink(self.db.name)
-
     # helper functions
 
     def register(self, username, password, password2=None, email=None):

@@ -48,7 +48,7 @@ def init_db():
         with app.open_resource('../schema.sql') as f:
             db.cursor().executescript(f.read().decode('utf-8'))
         db.commit()
-        print( "Initialized the database: " + str(DATABASE_PATH))
+        print("Initialized the database: " + str(DATABASE_PATH))
 
 
 def query_db(query, args=(), one=False):
@@ -126,7 +126,6 @@ def register():
     return render_template('register.html')
 
 
-
 ################################################################################
 # API Routes
 ################################################################################
@@ -177,12 +176,13 @@ def api_register():
     elif get_user_id(request.form['username']) is not None:
         error = 'The username is already taken'
     else:
-        g.db.execute("INSERT INTO users (username, email, password) values ('%s', '%s', '%s')" % 
+        g.db.execute("INSERT INTO users (username, email, password) values ('%s', '%s', '%s')" %
                      (request.form['username'], request.form['email'], hash_password(request.form['password'])))
         g.db.commit()
         flash('You were successfully registered and can login now')
         return redirect(url_for('login'))
     return render_template('register.html', error=error)
+
 
 @app.route('/api/logout')
 def logout():
@@ -190,6 +190,7 @@ def logout():
     flash('You were logged out')
     session.pop('user_id', None)
     return redirect(url_for('search'))
+
 
 ################################################################################
 # Security Functions
@@ -201,6 +202,7 @@ def hash_password(password):
     hash_object = hashlib.md5(password_bytes)
     password_hash = hash_object.hexdigest()
     return password_hash
+
 
 def verify_password(stored_hash, password):
     """Verify a stored password against one provided by user. Returns a boolean."""
